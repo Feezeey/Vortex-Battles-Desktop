@@ -1,0 +1,27 @@
+{
+  "name": "vortex-battles-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build:web": "vite build",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build",
+    "tauri": "tauri",
+    "configure": "node scripts/setup-project.mjs",
+    "set-version": "node scripts/set-version.mjs",
+    "check-config": "node scripts/check-config.mjs",
+    "test": "node scripts/check-config.mjs --structural",
+    "replace-game": "node scripts/replace-game.mjs"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-updater": "^2",
+    "@tauri-apps/plugin-process": "^2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "vite": "^7"
+  }
+}

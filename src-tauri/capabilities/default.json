@@ -1,0 +1,12 @@
+{
+  "identifier": "default",
+  "description": "Vortex Battles Desktop: nur Update und Neustart",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "updater:default",
+    "process:default"
+  ]
+}

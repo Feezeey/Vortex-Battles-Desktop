@@ -1,0 +1,42 @@
+name: Windows EXE und Updates veröffentlichen
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Quellcode herunterladen
+        uses: actions/checkout@v4
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Rust einrichten
+        uses: dtolnay/rust-toolchain@stable
+      - name: Rust-Cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+      - name: Frontend-Abhängigkeiten installieren
+        run: npm install
+      - name: App und Update-Konfiguration prüfen
+        run: npm run check-config
+      - name: Installations-EXE bauen und veröffentlichen
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          tagName: v__VERSION__
+          releaseName: 'Vortex Battles v__VERSION__'
+          releaseBody: 'Neues Vortex Battles Update. Windows: Setup-EXE herunterladen und installieren.'
+          releaseDraft: false
+          prerelease: false
+          uploadUpdaterJson: true
+          updaterJsonPreferNsis: true
